@@ -81,10 +81,14 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { name: "description", content: "Cortex Web Labs combines high-performance web development with advanced AI automation to future-proof your digital landscape." },
       { name: "author", content: "Cortex Web Labs" },
       { property: "og:title", content: "Cortex Web Labs — Intelligent Systems for Business Scale" },
-      { property: "og:description", content: "Elite web development and AI agency building intelligent systems that drive business scale." },
+      { property: "og:description", content: "Cortex Web Labs combines high-performance web development with advanced AI automation to future-proof your digital landscape." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
       { name: "twitter:site", content: "@cortexweblabs" },
+      { name: "twitter:title", content: "Cortex Web Labs — Intelligent Systems for Business Scale" },
+      { name: "twitter:description", content: "Cortex Web Labs combines high-performance web development with advanced AI automation to future-proof your digital landscape." },
+      { property: "og:image", content: "https://storage.googleapis.com/gpt-engineer-file-uploads/MQqxvtsS6gXrp1DbqLw6YXGolZG3/social-images/social-1783715325578-WhatsApp_Image_2026-07-09_at_1.45.59_AM.webp" },
+      { name: "twitter:image", content: "https://storage.googleapis.com/gpt-engineer-file-uploads/MQqxvtsS6gXrp1DbqLw6YXGolZG3/social-images/social-1783715325578-WhatsApp_Image_2026-07-09_at_1.45.59_AM.webp" },
     ],
     links: [
       {
