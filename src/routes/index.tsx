@@ -393,12 +393,29 @@ function Team() {
 }
 
 function Contact() {
-  const [bottleneck, setBottleneck] = useState("Website load time / Performance");
+  const defaultBottleneck = "Website load time / Performance";
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [bottleneck, setBottleneck] = useState(defaultBottleneck);
+  const [submitted, setSubmitted] = useState(false);
   const options = [
     "Website load time / Performance",
     "Manual data entry / Operations",
     "Customer Support load",
   ];
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    const { toast } = await import("sonner");
+    toast.success("Audit request received", {
+      description: "Our strategist will reach out within 48 hours.",
+    });
+    setName("");
+    setEmail("");
+    setBottleneck(defaultBottleneck);
+    setSubmitted(true);
+    setTimeout(() => setSubmitted(false), 6000);
+  };
 
   return (
     <section id="contact" className="py-24 md:py-32 relative">
@@ -408,68 +425,91 @@ function Contact() {
           title="Book your free technical audit."
           subtitle="Tell us where you're stuck. We'll return with a live systems diagnosis within 48 hours."
         />
-        <form
-          onSubmit={(e) => {
-            e.preventDefault();
-          }}
-          className="mt-12 glass-card rounded-2xl p-6 md:p-10 space-y-6"
-        >
-          <div className="grid md:grid-cols-2 gap-6">
-            <Field label="Name">
-              <input
-                required
-                maxLength={100}
-                placeholder="Ada Lovelace"
-                className="w-full h-11 px-4 rounded-md bg-input/50 border border-border focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/30 transition-all"
-              />
-            </Field>
-            <Field label="Business Email">
-              <input
-                required
-                type="email"
-                maxLength={255}
-                placeholder="you@company.com"
-                className="w-full h-11 px-4 rounded-md bg-input/50 border border-border focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/30 transition-all"
-              />
-            </Field>
-          </div>
-          <Field label="What is your business bottleneck?">
-            <div className="grid sm:grid-cols-3 gap-3">
-              {options.map((o) => {
-                const active = bottleneck === o;
-                return (
-                  <button
-                    type="button"
-                    key={o}
-                    onClick={() => setBottleneck(o)}
-                    className={`text-left p-4 rounded-md border text-sm transition-all ${
-                      active
-                        ? "border-primary bg-primary/10 text-foreground neon-glow"
-                        : "border-border bg-input/30 text-muted-foreground hover:border-primary/50 hover:text-foreground"
-                    }`}
-                  >
-                    <div
-                      className={`w-3 h-3 rounded-full mb-3 border ${
-                        active ? "bg-primary border-primary" : "border-muted-foreground"
-                      }`}
-                    />
-                    {o}
-                  </button>
-                );
-              })}
+        {submitted ? (
+          <div className="mt-12 glass-card rounded-2xl p-10 md:p-14 text-center neon-border">
+            <div className="mx-auto w-14 h-14 rounded-full bg-primary/15 border border-primary/50 flex items-center justify-center neon-glow mb-6">
+              <Zap className="w-6 h-6 text-primary" />
             </div>
-          </Field>
-          <button
-            type="submit"
-            className="w-full sm:w-auto inline-flex items-center justify-center gap-2 h-12 px-8 rounded-md bg-primary text-primary-foreground font-medium neon-glow hover:brightness-110 transition-all"
+            <h3 className="text-2xl md:text-3xl font-semibold text-glow">
+              Thank you! Transmission received.
+            </h3>
+            <p className="mt-4 text-muted-foreground max-w-xl mx-auto">
+              Our strategist will analyze your bottleneck and reach out within 48 hours.
+            </p>
+            <button
+              onClick={() => setSubmitted(false)}
+              className="mt-8 inline-flex items-center gap-2 h-11 px-6 rounded-md border border-primary/40 text-sm text-foreground hover:bg-primary/10 transition-all"
+            >
+              Send another request
+            </button>
+          </div>
+        ) : (
+          <form
+            onSubmit={handleSubmit}
+            className="mt-12 glass-card rounded-2xl p-6 md:p-10 space-y-6"
           >
-            <Zap className="w-4 h-4" /> Request Audit
-          </button>
-        </form>
+            <div className="grid md:grid-cols-2 gap-6">
+              <Field label="Name">
+                <input
+                  required
+                  maxLength={100}
+                  value={name}
+                  onChange={(e) => setName(e.target.value)}
+                  placeholder="Ada Lovelace"
+                  className="w-full h-11 px-4 rounded-md bg-input/50 border border-border focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/30 transition-all"
+                />
+              </Field>
+              <Field label="Business Email">
+                <input
+                  required
+                  type="email"
+                  maxLength={255}
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  placeholder="you@company.com"
+                  className="w-full h-11 px-4 rounded-md bg-input/50 border border-border focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/30 transition-all"
+                />
+              </Field>
+            </div>
+            <Field label="What is your business bottleneck?">
+              <div className="grid sm:grid-cols-3 gap-3">
+                {options.map((o) => {
+                  const active = bottleneck === o;
+                  return (
+                    <button
+                      type="button"
+                      key={o}
+                      onClick={() => setBottleneck(o)}
+                      className={`text-left p-4 rounded-md border text-sm transition-all ${
+                        active
+                          ? "border-primary bg-primary/10 text-foreground neon-glow"
+                          : "border-border bg-input/30 text-muted-foreground hover:border-primary/50 hover:text-foreground"
+                      }`}
+                    >
+                      <div
+                        className={`w-3 h-3 rounded-full mb-3 border ${
+                          active ? "bg-primary border-primary" : "border-muted-foreground"
+                        }`}
+                      />
+                      {o}
+                    </button>
+                  );
+                })}
+              </div>
+            </Field>
+            <button
+              type="submit"
+              className="w-full sm:w-auto inline-flex items-center justify-center gap-2 h-12 px-8 rounded-md bg-primary text-primary-foreground font-medium neon-glow hover:brightness-110 transition-all"
+            >
+              <Zap className="w-4 h-4" /> Request Audit
+            </button>
+          </form>
+        )}
       </div>
     </section>
   );
 }
+
 
 function Field({ label, children }: { label: string; children: React.ReactNode }) {
   return (
