@@ -1,5 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import {
   ArrowRight,
   Bot,
@@ -11,6 +11,7 @@ import {
   Instagram,
   Linkedin,
   Mail,
+  Menu,
   MessageSquare,
   Send,
   Sparkles,
@@ -19,6 +20,11 @@ import {
   X,
   Zap,
 } from "lucide-react";
+
+function scrollToId(id: string) {
+  const el = document.getElementById(id);
+  if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
+}
 import heroNeural from "@/assets/hero-neural.jpg";
 import team1 from "@/assets/team1.jpg";
 import team2 from "@/assets/team2.jpg";
