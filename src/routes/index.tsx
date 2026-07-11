@@ -551,12 +551,94 @@ function Footer() {
   );
 }
 
+type ChatMsg = {
+  role: "bot" | "user";
+  text: string;
+  cta?: { label: string; targetId: string };
+};
+
+const GREETING_RE = /\b(hi|hello|hey|yo|howdy|hola|greetings|sup|good\s+(morning|afternoon|evening))\b/i;
+
+function getBotReply(input: string): ChatMsg {
+  const text = input.trim();
+  if (GREETING_RE.test(text)) {
+    return {
+      role: "bot",
+      text: "Hey there 👋 Welcome to Cortex Web Labs. I can walk you through our services, case studies, or fast-track you to a free technical audit — where should we start?",
+      cta: { label: "Book a Free Technical Audit", targetId: "contact" },
+    };
+  }
+  const lower = text.toLowerCase();
+  if (lower.includes("price") || lower.includes("cost") || lower.includes("quote")) {
+    return {
+      role: "bot",
+      text: "Pricing scales with system complexity. The fastest path is a free audit — we'll return a scoped estimate within 48 hours.",
+      cta: { label: "Request Audit", targetId: "contact" },
+    };
+  }
+  if (lower.includes("service") || lower.includes("what do you do")) {
+    return {
+      role: "bot",
+      text: "We ship three interconnected capabilities: Full-Stack Web Development, AI & Generative Models, and Intelligent Automation. Want the deep dive?",
+      cta: { label: "See Services", targetId: "services" },
+    };
+  }
+  if (lower.includes("case") || lower.includes("portfolio") || lower.includes("work") || lower.includes("example")) {
+    return {
+      role: "bot",
+      text: "Sure — here are a few live deployments from the lab floor.",
+      cta: { label: "View Case Studies", targetId: "work" },
+    };
+  }
+  if (lower.includes("team") || lower.includes("who")) {
+    return {
+      role: "bot",
+      text: "Three co-founders run the labs: architecture, AI, and interface. Meet the operators below.",
+      cta: { label: "Meet the Team", targetId: "team" },
+    };
+  }
+  if (lower.includes("contact") || lower.includes("email") || lower.includes("talk")) {
+    return {
+      role: "bot",
+      text: "Fastest handshake: drop your details in the audit form and we'll respond within 48 hours.",
+      cta: { label: "Open Contact Form", targetId: "contact" },
+    };
+  }
+  return {
+    role: "bot",
+    text: "Noted — a strategist will follow up shortly. In the meantime, the fastest way to get a scoped answer is the free technical audit.",
+    cta: { label: "Book a Free Technical Audit", targetId: "contact" },
+  };
+}
+
 function CortexBot() {
   const [open, setOpen] = useState(false);
-  const [messages, setMessages] = useState<{ role: "bot" | "user"; text: string }[]>([
+  const [messages, setMessages] = useState<ChatMsg[]>([
     { role: "bot", text: "Hi, I'm Cortex — your AI concierge. How can we scale your systems today?" },
   ]);
   const [input, setInput] = useState("");
+  const [typing, setTyping] = useState(false);
+  const scrollRef = useRef<HTMLDivElement>(null);
+  const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  useEffect(() => {
+    scrollRef.current?.scrollTo({ top: scrollRef.current.scrollHeight, behavior: "smooth" });
+  }, [messages, typing]);
+
+  useEffect(() => () => { if (timerRef.current) clearTimeout(timerRef.current); }, []);
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    const value = input.trim();
+    if (!value || typing) return;
+    setMessages((prev) => [...prev, { role: "user", text: value }]);
+    setInput("");
+    setTyping(true);
+    timerRef.current = setTimeout(() => {
+      setMessages((prev) => [...prev, getBotReply(value)]);
+      setTyping(false);
+    }, 1200);
+  };
 
   return (
     <div className="fixed bottom-6 right-6 z-50">
@@ -580,7 +662,7 @@ function CortexBot() {
               <X className="w-4 h-4" />
             </button>
           </div>
-          <div className="p-4 space-y-3 h-64 overflow-y-auto">
+          <div ref={scrollRef} className="p-4 space-y-3 h-64 overflow-y-auto">
             {messages.map((m, i) => (
               <div
                 key={i}
@@ -593,25 +675,42 @@ function CortexBot() {
                 {m.role === "bot" ? (
                   <div className="flex gap-2">
                     <MessageSquare className="w-4 h-4 text-primary shrink-0 mt-0.5" />
-                    <span>{m.text}</span>
+                    <div className="space-y-2">
+                      <span>{m.text}</span>
+                      {m.cta && (
+                        <button
+                          type="button"
+                          onClick={() => {
+                            setOpen(false);
+                            scrollToId(m.cta!.targetId);
+                          }}
+                          className="inline-flex items-center gap-2 h-8 px-3 rounded-md bg-primary text-primary-foreground text-xs font-medium hover:neon-glow transition-all"
+                        >
+                          {m.cta.label} <ArrowRight className="w-3 h-3" />
+                        </button>
+                      )}
+                    </div>
                   </div>
                 ) : (
                   m.text
                 )}
               </div>
             ))}
+            {typing && (
+              <div className="text-sm text-foreground">
+                <div className="flex gap-2 items-center">
+                  <MessageSquare className="w-4 h-4 text-primary shrink-0" />
+                  <div className="flex gap-1 items-end h-4" aria-label="Cortex is typing">
+                    <span className="w-1.5 h-1.5 rounded-full bg-primary animate-bounce [animation-delay:-0.3s]" />
+                    <span className="w-1.5 h-1.5 rounded-full bg-primary animate-bounce [animation-delay:-0.15s]" />
+                    <span className="w-1.5 h-1.5 rounded-full bg-primary animate-bounce" />
+                  </div>
+                </div>
+              </div>
+            )}
           </div>
           <form
-            onSubmit={(e) => {
-              e.preventDefault();
-              if (!input.trim()) return;
-              setMessages((prev) => [
-                ...prev,
-                { role: "user", text: input },
-                { role: "bot", text: "Got it — a strategist will follow up shortly. Meanwhile, book a free audit below." },
-              ]);
-              setInput("");
-            }}
+            onSubmit={handleSubmit}
             className="flex items-center gap-2 p-3 border-t border-border/60 bg-background/60"
           >
             <input
@@ -623,7 +722,8 @@ function CortexBot() {
             />
             <button
               type="submit"
-              className="w-9 h-9 rounded-md bg-primary text-primary-foreground grid place-items-center hover:neon-glow transition-all"
+              disabled={typing || !input.trim()}
+              className="w-9 h-9 rounded-md bg-primary text-primary-foreground grid place-items-center hover:neon-glow transition-all disabled:opacity-50 disabled:cursor-not-allowed"
               aria-label="Send"
             >
               <Send className="w-4 h-4" />
