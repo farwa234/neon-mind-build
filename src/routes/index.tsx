@@ -104,10 +104,22 @@ function Index() {
 }
 
 function Nav() {
+  const [open, setOpen] = useState(false);
+  const links = [
+    { href: "services", label: "Services" },
+    { href: "work", label: "Case Studies" },
+    { href: "team", label: "Labs" },
+    { href: "contact", label: "Contact" },
+  ];
+  const handleClick = (id: string) => (e: React.MouseEvent) => {
+    e.preventDefault();
+    setOpen(false);
+    scrollToId(id);
+  };
   return (
     <header className="fixed top-0 inset-x-0 z-40 border-b border-border/40 backdrop-blur-xl bg-background/60">
       <div className="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
-        <a href="#top" className="flex items-center gap-2 group">
+        <a href="#top" onClick={handleClick("top")} className="flex items-center gap-2 group">
           <div className="w-8 h-8 rounded-lg neon-border grid place-items-center bg-surface">
             <Cpu className="w-4 h-4 text-primary" />
           </div>
@@ -116,17 +128,55 @@ function Nav() {
           </span>
         </a>
         <nav className="hidden md:flex items-center gap-8 text-sm text-muted-foreground">
-          <a href="#services" className="hover:text-primary transition-colors">Services</a>
-          <a href="#work" className="hover:text-primary transition-colors">Case Studies</a>
-          <a href="#team" className="hover:text-primary transition-colors">Labs</a>
-          <a href="#contact" className="hover:text-primary transition-colors">Contact</a>
+          {links.map((l) => (
+            <a key={l.href} href={`#${l.href}`} onClick={handleClick(l.href)} className="hover:text-primary transition-colors">
+              {l.label}
+            </a>
+          ))}
         </nav>
-        <a
-          href="#contact"
-          className="hidden sm:inline-flex items-center gap-2 h-9 px-4 rounded-md text-sm font-medium bg-primary text-primary-foreground hover:neon-glow transition-all"
-        >
-          Book Audit <ArrowRight className="w-3.5 h-3.5" />
-        </a>
+        <div className="flex items-center gap-2">
+          <a
+            href="#contact"
+            onClick={handleClick("contact")}
+            className="hidden sm:inline-flex items-center gap-2 h-9 px-4 rounded-md text-sm font-medium bg-primary text-primary-foreground hover:neon-glow transition-all"
+          >
+            Book Audit <ArrowRight className="w-3.5 h-3.5" />
+          </a>
+          <button
+            type="button"
+            onClick={() => setOpen((v) => !v)}
+            aria-label="Toggle menu"
+            aria-expanded={open}
+            className="md:hidden w-10 h-10 grid place-items-center rounded-md border border-border text-foreground hover:border-primary/60 hover:text-primary transition-all"
+          >
+            {open ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
+          </button>
+        </div>
+      </div>
+      <div
+        className={`md:hidden overflow-hidden border-t border-border/40 bg-background/95 backdrop-blur-xl transition-[max-height,opacity] duration-300 ease-out ${
+          open ? "max-h-96 opacity-100" : "max-h-0 opacity-0"
+        }`}
+      >
+        <nav className="px-6 py-4 flex flex-col gap-1">
+          {links.map((l) => (
+            <a
+              key={l.href}
+              href={`#${l.href}`}
+              onClick={handleClick(l.href)}
+              className="py-3 text-sm text-muted-foreground hover:text-primary border-b border-border/30 last:border-0"
+            >
+              {l.label}
+            </a>
+          ))}
+          <a
+            href="#contact"
+            onClick={handleClick("contact")}
+            className="mt-3 inline-flex sm:hidden items-center justify-center gap-2 h-10 px-4 rounded-md text-sm font-medium bg-primary text-primary-foreground"
+          >
+            Book Audit <ArrowRight className="w-3.5 h-3.5" />
+          </a>
+        </nav>
       </div>
     </header>
   );
