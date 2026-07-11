@@ -205,6 +205,7 @@ function Hero() {
             <div className="mt-8 flex flex-wrap gap-4">
               <a
                 href="#contact"
+                onClick={(e) => { e.preventDefault(); scrollToId("contact"); }}
                 className="group inline-flex items-center gap-2 h-12 px-6 rounded-md bg-primary text-primary-foreground font-medium neon-glow hover:brightness-110 transition-all"
               >
                 Book a Free Technical Audit
@@ -212,6 +213,7 @@ function Hero() {
               </a>
               <a
                 href="#work"
+                onClick={(e) => { e.preventDefault(); scrollToId("work"); }}
                 className="inline-flex items-center gap-2 h-12 px-6 rounded-md border border-border text-foreground hover:border-primary/60 hover:text-primary transition-all"
               >
                 View Case Studies
