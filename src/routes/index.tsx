@@ -339,9 +339,20 @@ function CaseStudies() {
                   ))}
                 </div>
                 <div className="mt-6 flex flex-wrap gap-3">
-                  <button className="inline-flex items-center gap-2 h-10 px-4 rounded-md bg-primary text-primary-foreground text-sm font-medium hover:neon-glow transition-all">
-                    <ExternalLink className="w-3.5 h-3.5" /> View Live Demo
-                  </button>
+                  {p.liveUrl ? (
+                    <a
+                      href={p.liveUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center gap-2 h-10 px-4 rounded-md bg-primary text-primary-foreground text-sm font-medium hover:neon-glow transition-all"
+                    >
+                      <ExternalLink className="w-3.5 h-3.5" /> View Live Demo
+                    </a>
+                  ) : (
+                    <button className="inline-flex items-center gap-2 h-10 px-4 rounded-md bg-primary text-primary-foreground text-sm font-medium hover:neon-glow transition-all">
+                      <ExternalLink className="w-3.5 h-3.5" /> View Live Demo
+                    </button>
+                  )}
                   <button className="inline-flex items-center gap-2 h-10 px-4 rounded-md border border-border text-sm hover:border-primary/60 hover:text-primary transition-all">
                     <Github className="w-3.5 h-3.5" /> View GitHub
                   </button>
