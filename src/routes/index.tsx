@@ -559,12 +559,14 @@ function Footer() {
     <footer className="border-t border-border/40 mt-16 py-12 relative">
       <div className="max-w-7xl mx-auto px-6 grid md:grid-cols-3 gap-8 items-start">
         <div>
-          <div className="flex items-center gap-2 mb-4">
-            <div className="w-8 h-8 rounded-lg neon-border grid place-items-center bg-surface">
-              <Cpu className="w-4 h-4 text-primary" />
-            </div>
-            <span className="font-bold">
-              Cortex<span className="text-primary">Web</span>Labs
+          <div className="flex items-center gap-3 mb-4">
+            <img
+              src={cortexLogo.url}
+              alt="Cortex Web Labs"
+              className="h-10 w-10 rounded-lg object-cover ring-1 ring-primary/40"
+            />
+            <span className="font-heading tracking-wider text-silver-gradient">
+              CORTEX <span className="text-chrome-blue">WEB LABS</span>
             </span>
           </div>
           <p className="text-sm text-muted-foreground max-w-xs">
