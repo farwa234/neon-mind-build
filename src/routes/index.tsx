@@ -703,7 +703,7 @@ function CortexBot() {
     timerRef.current = setTimeout(() => {
       setMessages((prev) => [...prev, getBotReply(value)]);
       setTyping(false);
-    }, 1200);
+    }, 1000);
   };
 
   return (
