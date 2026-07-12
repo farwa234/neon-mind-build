@@ -65,6 +65,7 @@ const projects = [
     title: "AI-Powered Smart E-Commerce Platform",
     desc: "Integrated custom recommendation engine driving a 34% lift in AOV via real-time personalization.",
     stack: ["Next.js", "Pinecone", "Stripe"],
+    liveUrl: "https://ether-analytics-x.vercel.app",
   },
   {
     img: case2,
