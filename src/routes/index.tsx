@@ -609,10 +609,12 @@ function Footer() {
   );
 }
 
+type ChatCta = { label: string; targetId: string };
 type ChatMsg = {
   role: "bot" | "user";
   text: string;
-  cta?: { label: string; targetId: string };
+  cta?: ChatCta;
+  ctas?: ChatCta[];
 };
 
 const GREETING_RE = /\b(hi|hello|hey|yo|howdy|hola|greetings|sup|good\s+(morning|afternoon|evening))\b/i;
@@ -622,49 +624,55 @@ function getBotReply(input: string): ChatMsg {
   if (GREETING_RE.test(text)) {
     return {
       role: "bot",
-      text: "Hey there 👋 Welcome to Cortex Web Labs. I can walk you through our services, case studies, or fast-track you to a free technical audit — where should we start?",
-      cta: { label: "Book a Free Technical Audit", targetId: "contact" },
+      text: "Welcome to Cortex Web Labs. I am your automated systems concierge. I can seamlessly guide you through our core capabilities, showcase our data-driven case studies, or instantly fast-track you to a complimentary Technical Architecture Audit. Where shall we optimize first?",
+      ctas: [
+        { label: "Explore Services", targetId: "services" },
+        { label: "Book Free Audit", targetId: "contact" },
+      ],
     };
   }
   const lower = text.toLowerCase();
   if (lower.includes("price") || lower.includes("cost") || lower.includes("quote")) {
     return {
       role: "bot",
-      text: "Pricing scales with system complexity. The fastest path is a free audit — we'll return a scoped estimate within 48 hours.",
+      text: "Pricing is scoped to system complexity and integration depth. The most efficient path forward is a complimentary Technical Architecture Audit — our strategists will return a fully scoped proposal within 48 hours.",
       cta: { label: "Request Audit", targetId: "contact" },
     };
   }
-  if (lower.includes("service") || lower.includes("what do you do")) {
+  if (lower.includes("service") || lower.includes("build") || lower.includes("develop")) {
     return {
       role: "bot",
-      text: "We ship three interconnected capabilities: Full-Stack Web Development, AI & Generative Models, and Intelligent Automation. Want the deep dive?",
-      cta: { label: "See Services", targetId: "services" },
+      text: "Cortex Web Labs specializes in three deeply integrated disciplines: production-grade MERN stack architectures for scalable web platforms, predictive AI modeling and generative systems tailored to your data, and end-to-end intelligent automations that eliminate operational friction. Each engagement is engineered for measurable performance gains.",
+      ctas: [
+        { label: "Explore Services", targetId: "services" },
+        { label: "Book Free Audit", targetId: "contact" },
+      ],
     };
   }
   if (lower.includes("case") || lower.includes("portfolio") || lower.includes("work") || lower.includes("example")) {
     return {
       role: "bot",
-      text: "Sure — here are a few live deployments from the lab floor.",
+      text: "Certainly — please review a selection of our live production deployments and measurable client outcomes.",
       cta: { label: "View Case Studies", targetId: "work" },
     };
   }
   if (lower.includes("team") || lower.includes("who")) {
     return {
       role: "bot",
-      text: "Three co-founders run the labs: architecture, AI, and interface. Meet the operators below.",
+      text: "Our leadership spans three specialized domains: systems architecture, applied AI and data science, and interface engineering. Please review the operators driving each engagement.",
       cta: { label: "Meet the Team", targetId: "team" },
     };
   }
   if (lower.includes("contact") || lower.includes("email") || lower.includes("talk")) {
     return {
       role: "bot",
-      text: "Fastest handshake: drop your details in the audit form and we'll respond within 48 hours.",
+      text: "The fastest channel is our audit intake form. A senior strategist will respond within 48 hours with a scoped recommendation.",
       cta: { label: "Open Contact Form", targetId: "contact" },
     };
   }
   return {
     role: "bot",
-    text: "Noted — a strategist will follow up shortly. In the meantime, the fastest way to get a scoped answer is the free technical audit.",
+    text: "Understood. A Cortex strategist will personally review your request. For an immediate, scoped response, we recommend initiating a complimentary Technical Architecture Audit.",
     cta: { label: "Book a Free Technical Audit", targetId: "contact" },
   };
 }
