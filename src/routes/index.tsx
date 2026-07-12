@@ -15,7 +15,7 @@ import {
   MessageSquare,
   Send,
   Sparkles,
-  Twitter,
+  Facebook,
   Workflow,
   X,
   Zap,
@@ -560,17 +560,23 @@ function Footer() {
         <div>
           <div className="text-xs font-mono uppercase text-muted-foreground mb-3">Contact</div>
           <a
-            href="mailto:info@cortexweblabs.com"
+            href="mailto:cortexweblabs786@gmail.com"
             className="inline-flex items-center gap-2 text-sm hover:text-primary transition-colors"
           >
-            <Mail className="w-4 h-4" /> info@cortexweblabs.com
+            <Mail className="w-4 h-4" /> cortexweblabs786@gmail.com
           </a>
           <div className="flex gap-3 mt-5">
-            {[Linkedin, Instagram, Twitter].map((Icon, i) => (
+            {[
+              { Icon: Linkedin, href: "https://www.linkedin.com/company/cortex-web-labs/?viewAsMember=true", label: "LinkedIn" },
+              { Icon: Instagram, href: "https://www.instagram.com/cortex.weblabs?igsh=MXdnMzd1dGFza3hnYw==", label: "Instagram" },
+              { Icon: Facebook, href: "https://www.facebook.com/share/198Ra6M91u/", label: "Facebook" },
+            ].map(({ Icon, href, label }) => (
               <a
-                key={i}
-                href="#"
-                aria-label="social"
+                key={label}
+                href={href}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label={label}
                 className="w-10 h-10 rounded-md border border-border grid place-items-center text-muted-foreground hover:text-primary hover:border-primary/60 transition-all"
               >
                 <Icon className="w-4 h-4" />
