@@ -32,6 +32,7 @@ import team3 from "@/assets/team3.jpg";
 import case1 from "@/assets/case1.jpg";
 import case2 from "@/assets/case2.jpg";
 import case3 from "@/assets/case3.jpg";
+import cortexLogo from "@/assets/cortex-logo.jpeg.asset.json";
 
 export const Route = createFileRoute("/")({
   component: Index,
@@ -120,12 +121,14 @@ function Nav() {
   return (
     <header className="fixed top-0 inset-x-0 z-40 border-b border-border/40 backdrop-blur-xl bg-background/60">
       <div className="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
-        <a href="#top" onClick={handleClick("top")} className="flex items-center gap-2 group">
-          <div className="w-8 h-8 rounded-lg neon-border grid place-items-center bg-surface">
-            <Cpu className="w-4 h-4 text-primary" />
-          </div>
-          <span className="font-bold tracking-tight">
-            Cortex<span className="text-primary">Web</span>Labs
+        <a href="#top" onClick={handleClick("top")} className="flex items-center gap-3 group">
+          <img
+            src={cortexLogo.url}
+            alt="Cortex Web Labs"
+            className="h-10 w-10 rounded-lg object-cover ring-1 ring-primary/40 shadow-[0_0_18px_oklch(0.72_0.17_235/0.45)]"
+          />
+          <span className="font-heading text-lg tracking-wider text-silver-gradient">
+            CORTEX <span className="text-chrome-blue">WEB LABS</span>
           </span>
         </a>
         <nav className="hidden md:flex items-center gap-8 text-sm text-muted-foreground">
