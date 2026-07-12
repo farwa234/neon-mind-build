@@ -743,17 +743,22 @@ function CortexBot() {
                     <MessageSquare className="w-4 h-4 text-primary shrink-0 mt-0.5" />
                     <div className="space-y-2">
                       <span>{m.text}</span>
-                      {m.cta && (
-                        <button
-                          type="button"
-                          onClick={() => {
-                            setOpen(false);
-                            scrollToId(m.cta!.targetId);
-                          }}
-                          className="inline-flex items-center gap-2 h-8 px-3 rounded-md bg-primary text-primary-foreground text-xs font-medium hover:neon-glow transition-all"
-                        >
-                          {m.cta.label} <ArrowRight className="w-3 h-3" />
-                        </button>
+                      {(m.ctas ?? (m.cta ? [m.cta] : [])).length > 0 && (
+                        <div className="flex flex-wrap gap-2 pt-1">
+                          {(m.ctas ?? (m.cta ? [m.cta] : [])).map((c, ci) => (
+                            <button
+                              key={ci}
+                              type="button"
+                              onClick={() => {
+                                setOpen(false);
+                                scrollToId(c.targetId);
+                              }}
+                              className="inline-flex items-center gap-2 h-8 px-3 rounded-md bg-primary text-primary-foreground text-xs font-medium hover:neon-glow transition-all"
+                            >
+                              {c.label} <ArrowRight className="w-3 h-3" />
+                            </button>
+                          ))}
+                        </div>
                       )}
                     </div>
                   </div>
