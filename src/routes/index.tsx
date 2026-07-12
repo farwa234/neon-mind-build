@@ -5,7 +5,6 @@ import {
   Bot,
   Brain,
   Code2,
-  Cpu,
   Github,
   ExternalLink,
   Instagram,
@@ -197,10 +196,10 @@ function Hero() {
               <span className="w-1.5 h-1.5 rounded-full bg-primary animate-pulse" />
               SYSTEMS ONLINE · v2.7
             </div>
-            <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold tracking-tight leading-[1.05]">
-              We Build{" "}
-              <span className="text-primary text-glow">Intelligent Systems</span>{" "}
-              that Drive Business Scale.
+            <h1 className="font-heading text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold tracking-tight leading-[1.05]">
+              <span className="text-silver-gradient">We Build</span>{" "}
+              <span className="text-chrome-blue text-glow">Intelligent Systems</span>{" "}
+              <span className="text-silver-gradient">that Drive Business Scale.</span>
             </h1>
             <p className="mt-6 text-lg text-muted-foreground max-w-xl leading-relaxed">
               Cortex Web Labs combines high-performance Web Development with advanced AI Automation
