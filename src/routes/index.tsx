@@ -15,7 +15,7 @@ import {
   MessageSquare,
   Send,
   Sparkles,
-  Twitter,
+  Facebook,
   Workflow,
   X,
   Zap,
