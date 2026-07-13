@@ -79,7 +79,8 @@
   }
   h1, h2, h3, .font-heading {
     font-family: var(--font-heading);
-    letter-spacing: -0.01em;
+    letter-spacing: -0.02em;
+    font-weight: 600;
   }
 }
 
