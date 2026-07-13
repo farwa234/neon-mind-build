@@ -563,10 +563,10 @@ function Footer() {
             <img
               src={cortexLogo.url}
               alt="Cortex Web Labs"
-              className="h-10 w-10 rounded-lg object-cover ring-1 ring-primary/40"
+              className="h-10 w-auto object-contain"
             />
-            <span className="font-heading tracking-wider text-silver-gradient">
-              CORTEX <span className="text-chrome-blue">WEB LABS</span>
+            <span className="font-semibold tracking-tight text-foreground">
+              Cortex <span className="text-primary">Web Labs</span>
             </span>
           </div>
           <p className="text-sm text-muted-foreground max-w-xs">
