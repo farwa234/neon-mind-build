@@ -28,8 +28,8 @@
   --color-neon-soft: var(--neon-soft);
   --color-silver: var(--silver);
   --color-surface: var(--surface);
-  --font-display: "Rajdhani", "Space Grotesk", "Inter", sans-serif;
-  --font-heading: "Orbitron", "Rajdhani", sans-serif;
+  --font-display: "Inter", "Plus Jakarta Sans", ui-sans-serif, system-ui, sans-serif;
+  --font-heading: "Inter", "Plus Jakarta Sans", ui-sans-serif, system-ui, sans-serif;
   --font-mono: "JetBrains Mono", ui-monospace, monospace;
 }
 
@@ -79,7 +79,8 @@
   }
   h1, h2, h3, .font-heading {
     font-family: var(--font-heading);
-    letter-spacing: -0.01em;
+    letter-spacing: -0.02em;
+    font-weight: 600;
   }
 }
 

@@ -124,10 +124,10 @@ function Nav() {
           <img
             src={cortexLogo.url}
             alt="Cortex Web Labs"
-            className="h-10 w-10 rounded-lg object-cover ring-1 ring-primary/40 shadow-[0_0_18px_oklch(0.72_0.17_235/0.45)]"
+            className="h-10 w-auto object-contain drop-shadow-[0_0_12px_oklch(0.72_0.17_235/0.45)]"
           />
-          <span className="font-heading text-lg tracking-wider text-silver-gradient">
-            CORTEX <span className="text-chrome-blue">WEB LABS</span>
+          <span className="font-semibold text-base tracking-tight text-foreground">
+            Cortex <span className="text-primary">Web Labs</span>
           </span>
         </a>
         <nav className="hidden md:flex items-center gap-8 text-sm text-muted-foreground">
@@ -563,10 +563,10 @@ function Footer() {
             <img
               src={cortexLogo.url}
               alt="Cortex Web Labs"
-              className="h-10 w-10 rounded-lg object-cover ring-1 ring-primary/40"
+              className="h-10 w-auto object-contain"
             />
-            <span className="font-heading tracking-wider text-silver-gradient">
-              CORTEX <span className="text-chrome-blue">WEB LABS</span>
+            <span className="font-semibold tracking-tight text-foreground">
+              Cortex <span className="text-primary">Web Labs</span>
             </span>
           </div>
           <p className="text-sm text-muted-foreground max-w-xs">
